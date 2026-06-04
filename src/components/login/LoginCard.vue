@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Checkbox from 'primevue/checkbox'
-import Divider from 'primevue/divider'
 import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
 
@@ -75,9 +74,11 @@ const onSubmit = () => {
           fluid
         />
 
-        <Divider align="center" type="solid" class="divider">
-          <span class="divider-label">or</span>
-        </Divider>
+        <div class="or-separator" role="separator" aria-label="or">
+          <span class="or-line" />
+          <span class="or-label">or</span>
+          <span class="or-line" />
+        </div>
 
         <Button
           type="button"
@@ -169,6 +170,26 @@ const onSubmit = () => {
   margin: 0.1rem 0;
 }
 
+.or-separator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.2rem 0;
+}
+
+.or-line {
+  flex: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--p-content-border-color) 80%, transparent);
+}
+
+.or-label {
+  color: var(--p-text-muted-color);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
 .divider-label {
   color: var(--p-text-muted-color);
   font-size: 0.8rem;
@@ -204,6 +225,16 @@ const onSubmit = () => {
 
 .login-form :deep(.p-floatlabel label) {
   color: color-mix(in srgb, var(--p-text-muted-color) 75%, var(--p-primary-500));
+  background: transparent !important;
+  padding: 0 0.35rem;
+}
+
+.login-form :deep(.p-floatlabel-on label),
+.login-form :deep(.p-floatlabel input:focus ~ label),
+.login-form :deep(.p-floatlabel input.p-filled ~ label),
+.login-form :deep(.p-floatlabel input:not(:placeholder-shown) ~ label) {
+  background: var(--p-surface-0) !important;
+  color: var(--p-primary-600) !important;
 }
 
 .login-form :deep(.p-button) {
@@ -211,8 +242,18 @@ const onSubmit = () => {
   padding: 0.85rem 1rem;
 }
 
-.login-form :deep(.p-divider .p-divider-content) {
-  background: transparent;
-  padding: 0 0.75rem;
+.login-form :deep(.p-checkbox .p-checkbox-box) {
+  background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
+  border-color: color-mix(in srgb, var(--p-primary-200) 60%, var(--p-content-border-color));
+  border-radius: 6px;
+}
+
+.login-form :deep(.p-checkbox:not(.p-disabled):hover .p-checkbox-box) {
+  border-color: var(--p-primary-400);
+}
+
+.login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-box) {
+  background: var(--p-primary-500);
+  border-color: var(--p-primary-500);
 }
 </style>
