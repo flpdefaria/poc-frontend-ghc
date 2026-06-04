@@ -224,7 +224,7 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-floatlabel label) {
-  color: color-mix(in srgb, var(--p-text-muted-color) 75%, var(--p-primary-500));
+  color: var(--p-surface-400);
   background: transparent !important;
   padding: 0;
 }
@@ -243,17 +243,30 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-checkbox .p-checkbox-box) {
-  background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
-  border-color: color-mix(in srgb, var(--p-primary-200) 60%, var(--p-content-border-color));
+  background: var(--p-surface-0);
+  border: 1px solid color-mix(in srgb, var(--p-primary-200) 60%, var(--p-content-border-color));
   border-radius: 6px;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .login-form :deep(.p-checkbox:not(.p-disabled):hover .p-checkbox-box) {
-  border-color: var(--p-primary-400);
+  background: var(--p-surface-0);
+  border-color: var(--p-primary-500);
 }
 
-.login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-box) {
-  background: var(--p-primary-500);
-  border-color: var(--p-primary-500);
+.login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-box),
+.login-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-box),
+.login-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-box) {
+  background: var(--p-surface-0) !important;
+  border-color: var(--p-primary-500) !important;
+}
+
+.login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-icon),
+.login-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-icon),
+.login-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-icon) {
+  color: var(--p-primary-500) !important;
+  fill: var(--p-primary-500) !important;
 }
 </style>
