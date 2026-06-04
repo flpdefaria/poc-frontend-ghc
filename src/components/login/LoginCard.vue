@@ -34,12 +34,12 @@ const onSubmit = () => {
 
     <template #content>
       <form class="login-form" @submit.prevent="onSubmit">
-        <FloatLabel variant="on">
+        <FloatLabel>
           <InputText id="email" v-model="email" type="email" autocomplete="email" fluid />
           <label for="email">Email</label>
         </FloatLabel>
 
-        <FloatLabel variant="on">
+        <FloatLabel>
           <InputText
             id="password"
             v-model="password"
@@ -132,9 +132,9 @@ const onSubmit = () => {
 }
 
 .login-form {
-  margin-top: 0.75rem;
+  margin-top: 1.25rem;
   display: grid;
-  gap: 1.15rem;
+  gap: 1.75rem;
 }
 
 .form-row {
@@ -226,14 +226,14 @@ const onSubmit = () => {
 .login-form :deep(.p-floatlabel label) {
   color: color-mix(in srgb, var(--p-text-muted-color) 75%, var(--p-primary-500));
   background: transparent !important;
-  padding: 0 0.35rem;
+  padding: 0;
 }
 
 .login-form :deep(.p-floatlabel-on label),
 .login-form :deep(.p-floatlabel input:focus ~ label),
 .login-form :deep(.p-floatlabel input.p-filled ~ label),
 .login-form :deep(.p-floatlabel input:not(:placeholder-shown) ~ label) {
-  background: var(--p-surface-0) !important;
+  background: transparent !important;
   color: var(--p-primary-600) !important;
 }
 
