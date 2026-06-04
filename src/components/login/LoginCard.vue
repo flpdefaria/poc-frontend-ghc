@@ -2,21 +2,24 @@
 import { ref } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
+import Checkbox from 'primevue/checkbox'
+import Divider from 'primevue/divider'
 import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
-import Password from 'primevue/password'
 
 const emit = defineEmits<{
-  submit: [payload: { email: string; password: string }]
+  submit: [payload: { email: string; password: string; remember: boolean }]
 }>()
 
 const email = ref('')
 const password = ref('')
+const remember = ref(true)
 
 const onSubmit = () => {
   emit('submit', {
     email: email.value,
-    password: password.value
+    password: password.value,
+    remember: remember.value
   })
 }
 </script>
@@ -24,26 +27,67 @@ const onSubmit = () => {
 <template>
   <Card class="login-card">
     <template #title>
-      <h2 class="title">Login</h2>
+      <div class="header">
+        <h2 class="title">Sign in</h2>
+        <p class="description">Enter your credentials to access your account.</p>
+      </div>
     </template>
-    <template #subtitle>
-      <p class="description">Access your workspace and continue your journey.</p>
-    </template>
+
     <template #content>
       <form class="login-form" @submit.prevent="onSubmit">
         <FloatLabel variant="on">
-          <InputText id="email" v-model="email" type="email" fluid />
+          <InputText id="email" v-model="email" type="email" autocomplete="email" fluid />
           <label for="email">Email</label>
         </FloatLabel>
 
         <FloatLabel variant="on">
-          <Password id="password" v-model="password" :feedback="false" toggle-mask fluid />
+          <InputText
+            id="password"
+            v-model="password"
+            type="password"
+            autocomplete="current-password"
+            fluid
+          />
           <label for="password">Password</label>
         </FloatLabel>
 
-        <Button type="submit" label="Login" icon="pi pi-sign-in" class="login-button" fluid />
+        <div class="form-row">
+          <label class="remember">
+            <Checkbox v-model="remember" :binary="true" inputId="remember" />
+            <span>Remember me</span>
+          </label>
 
-        <a href="#" class="create-account">For create account</a>
+          <Button
+            label="Forgot password?"
+            variant="link"
+            size="small"
+            class="forgot"
+            severity="secondary"
+          />
+        </div>
+
+        <Button
+          type="submit"
+          label="Sign in"
+          icon="pi pi-arrow-right"
+          icon-pos="right"
+          class="login-button"
+          fluid
+        />
+
+        <Divider align="center" type="solid" class="divider">
+          <span class="divider-label">or</span>
+        </Divider>
+
+        <Button
+          type="button"
+          label="Create an account"
+          icon="pi pi-user-plus"
+          variant="outlined"
+          severity="secondary"
+          class="create-account"
+          fluid
+        />
       </form>
     </template>
   </Card>
@@ -51,42 +95,124 @@ const onSubmit = () => {
 
 <style scoped>
 .login-card {
-  border-radius: 24px;
-  border: 1px solid var(--p-content-border-color);
-  backdrop-filter: blur(10px);
-  background: color-mix(in srgb, var(--p-surface-0) 86%, transparent);
-  box-shadow: 0 24px 50px color-mix(in srgb, var(--p-primary-950) 30%, transparent);
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--p-surface-0) 35%, transparent);
+  background: color-mix(in srgb, var(--p-surface-0) 94%, transparent);
+  backdrop-filter: blur(18px);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--p-surface-0) 60%, transparent) inset,
+    0 24px 60px color-mix(in srgb, var(--p-primary-950) 28%, transparent);
+  width: min(420px, 100%);
+  justify-self: center;
+}
+
+.login-card :deep(.p-card-body) {
+  padding: 2.25rem 2rem;
+  gap: 1rem;
+}
+
+.header {
+  display: grid;
+  gap: 0.4rem;
 }
 
 .title {
-  font-size: 1.6rem;
+  font-size: 1.65rem;
   font-weight: 700;
-  color: var(--p-text-color);
+  letter-spacing: -0.01em;
+  color: var(--p-primary-700);
+  margin: 0;
 }
 
 .description {
   color: var(--p-text-muted-color);
+  font-size: 0.95rem;
+  margin: 0;
 }
 
 .login-form {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   display: grid;
-  gap: 1.2rem;
+  gap: 1.15rem;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: -0.25rem;
+}
+
+.remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  color: var(--p-text-muted-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.forgot {
+  padding: 0 !important;
+  color: var(--p-primary-600) !important;
 }
 
 .login-button {
-  margin-top: 0.1rem;
+  margin-top: 0.25rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.divider {
+  margin: 0.1rem 0;
+}
+
+.divider-label {
+  color: var(--p-text-muted-color);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
 }
 
 .create-account {
-  justify-self: center;
-  color: var(--p-primary-color);
-  text-decoration: none;
   font-weight: 600;
 }
 
-.create-account:hover {
-  color: var(--p-primary-700);
-  text-decoration: underline;
+.login-form :deep(.p-inputtext) {
+  background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
+  border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
+  border-radius: 12px;
+  padding: 0.95rem 0.9rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.login-form :deep(.p-inputtext:hover) {
+  border-color: color-mix(in srgb, var(--p-primary-300) 60%, var(--p-content-border-color));
+  background: color-mix(in srgb, var(--p-primary-50) 40%, var(--p-surface-0));
+}
+
+.login-form :deep(.p-inputtext:focus) {
+  border-color: var(--p-primary-400);
+  background: var(--p-surface-0);
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--p-primary-300) 28%, transparent);
+}
+
+.login-form :deep(.p-floatlabel label) {
+  color: color-mix(in srgb, var(--p-text-muted-color) 75%, var(--p-primary-500));
+}
+
+.login-form :deep(.p-button) {
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.login-form :deep(.p-divider .p-divider-content) {
+  background: transparent;
+  padding: 0 0.75rem;
 }
 </style>

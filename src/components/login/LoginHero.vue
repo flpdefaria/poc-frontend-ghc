@@ -1,44 +1,155 @@
+<script setup lang="ts">
+import Tag from 'primevue/tag'
+
+const features = [
+  { icon: 'pi pi-bolt', text: 'Lightning-fast workflows' },
+  { icon: 'pi pi-shield', text: 'Enterprise-grade security' },
+  { icon: 'pi pi-sparkles', text: 'Beautifully crafted experience' }
+]
+</script>
+
 <template>
-  <div class="hero-panel">
-    <p class="eyebrow">PrimeVue App</p>
-    <h1 class="hero-title">Welcome Back</h1>
-    <p class="hero-copy">Access your workspace and continue your journey.</p>
-  </div>
+  <section class="hero-panel">
+    <div class="brand">
+      <span class="brand-mark">
+        <i class="pi pi-prime" />
+      </span>
+      <span class="brand-name">PrimeVue</span>
+    </div>
+
+    <Tag value="Welcome back" rounded class="eyebrow" />
+
+    <h1 class="hero-title">
+      Sign in to continue<br />
+      <span class="hero-title-accent">your journey.</span>
+    </h1>
+
+    <p class="hero-copy">
+      Access your workspace and pick up exactly where you left off — with a polished
+      experience powered by PrimeVue.
+    </p>
+
+    <ul class="feature-list">
+      <li v-for="feature in features" :key="feature.text" class="feature">
+        <span class="feature-icon">
+          <i :class="feature.icon" />
+        </span>
+        <span>{{ feature.text }}</span>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <style scoped>
 .hero-panel {
-  color: color-mix(in srgb, var(--p-primary-50) 92%, white);
+  color: color-mix(in srgb, var(--p-surface-0) 92%, var(--p-primary-50));
+  display: grid;
+  gap: 1.5rem;
+  max-width: 30rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--p-surface-0) 95%, var(--p-primary-100));
+}
+
+.brand-mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--p-primary-400) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--p-primary-300) 35%, transparent);
+  color: var(--p-primary-100);
+  font-size: 1.1rem;
+}
+
+.brand-name {
+  font-size: 1rem;
 }
 
 .eyebrow {
-  font-size: 0.85rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0.85;
-  margin-bottom: 1rem;
+  justify-self: start;
+  background: color-mix(in srgb, var(--p-primary-400) 22%, transparent) !important;
+  color: color-mix(in srgb, var(--p-surface-0) 92%, var(--p-primary-100)) !important;
+  border: 1px solid color-mix(in srgb, var(--p-primary-300) 30%, transparent);
+  backdrop-filter: blur(6px);
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  line-height: 1.04;
-  margin-bottom: 0.9rem;
+  font-size: clamp(2.4rem, 5.4vw, 3.6rem);
+  line-height: 1.08;
   font-weight: 700;
+  letter-spacing: -0.02em;
+  color: color-mix(in srgb, var(--p-surface-0) 98%, var(--p-primary-50));
+}
+
+.hero-title-accent {
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--p-primary-200) 90%, white),
+    color-mix(in srgb, var(--p-primary-400) 80%, white)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-copy {
   font-size: 1.05rem;
-  max-width: 36ch;
-  opacity: 0.92;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--p-surface-0) 75%, var(--p-primary-200));
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: color-mix(in srgb, var(--p-surface-0) 88%, var(--p-primary-100));
+  font-size: 0.95rem;
+}
+
+.feature-icon {
+  width: 1.85rem;
+  height: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--p-primary-400) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--p-primary-300) 28%, transparent);
+  color: var(--p-primary-100);
+  font-size: 0.85rem;
 }
 
 @media (max-width: 900px) {
   .hero-panel {
     text-align: center;
+    justify-items: center;
+    margin: 0 auto;
   }
 
-  .hero-copy {
-    margin: 0 auto;
+  .brand,
+  .eyebrow {
+    justify-self: center;
+  }
+
+  .feature-list {
+    justify-items: start;
   }
 }
 </style>

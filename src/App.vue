@@ -5,10 +5,11 @@ import LoginHero from './components/login/LoginHero.vue'
 type LoginPayload = {
   email: string
   password: string
+  remember: boolean
 }
 
 const onLogin = (payload: LoginPayload) => {
-  console.log('Login requested', { email: payload.email })
+  console.log('Login requested', { email: payload.email, remember: payload.remember })
 }
 </script>
 
@@ -22,20 +23,21 @@ const onLogin = (payload: LoginPayload) => {
 <style scoped>
 .login-page {
   min-height: 100vh;
-  width: min(1080px, 100%);
+  width: min(1140px, 100%);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 4rem;
   align-items: center;
-  padding: 2.5rem 1rem;
+  padding: 3rem 1.5rem;
 }
 
 @media (max-width: 900px) {
   .login-page {
     grid-template-columns: 1fr;
-    width: min(560px, 100%);
-    padding-top: 1.5rem;
+    width: min(480px, 100%);
+    gap: 2.5rem;
+    padding: 2rem 1.25rem;
   }
 }
 </style>
