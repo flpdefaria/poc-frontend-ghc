@@ -4,8 +4,10 @@ import LoginCard from './components/login/LoginCard.vue'
 import LoginHero from './components/login/LoginHero.vue'
 import RegisterCard from './components/register/RegisterCard.vue'
 import RegisterHero from './components/register/RegisterHero.vue'
+import ForgotPasswordCard from './components/forgot-password/ForgotPasswordCard.vue'
+import ForgotPasswordHero from './components/forgot-password/ForgotPasswordHero.vue'
 
-type View = 'login' | 'register'
+type View = 'login' | 'register' | 'forgot-password'
 const view = ref<View>('login')
 
 type LoginPayload = {
@@ -28,17 +30,29 @@ const onLogin = (payload: LoginPayload) => {
 const onRegister = (payload: RegisterPayload) => {
   console.log('Register requested', { name: payload.name, email: payload.email })
 }
+
+const onForgotPassword = (payload: { email: string }) => {
+  console.log('Reset requested', { email: payload.email })
+}
 </script>
 
 <template>
   <main class="login-page">
     <template v-if="view === 'login'">
       <LoginHero />
-      <LoginCard @submit="onLogin" @go-to-register="view = 'register'" />
+      <LoginCard
+        @submit="onLogin"
+        @go-to-register="view = 'register'"
+        @go-to-forgot-password="view = 'forgot-password'"
+      />
     </template>
-    <template v-else>
+    <template v-else-if="view === 'register'">
       <RegisterHero />
       <RegisterCard @submit="onRegister" @go-to-login="view = 'login'" />
+    </template>
+    <template v-else>
+      <ForgotPasswordHero />
+      <ForgotPasswordCard @submit="onForgotPassword" @go-to-login="view = 'login'" />
     </template>
   </main>
 </template>

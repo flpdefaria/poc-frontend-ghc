@@ -10,6 +10,7 @@ import Password from 'primevue/password'
 const emit = defineEmits<{
   submit: [payload: { email: string; password: string; remember: boolean }]
   goToRegister: []
+  goToForgotPassword: []
 }>()
 
 const email = ref('')
@@ -97,6 +98,7 @@ const onSubmit = () => {
             size="small"
             class="forgot"
             severity="secondary"
+            @click="emit('goToForgotPassword')"
           />
         </div>
 
