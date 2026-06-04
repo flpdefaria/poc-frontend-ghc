@@ -8,7 +8,7 @@
 
 <style scoped>
 .hero-panel {
-  color: #f8fafc;
+  color: color-mix(in srgb, var(--p-primary-50) 92%, white);
 }
 
 .eyebrow {

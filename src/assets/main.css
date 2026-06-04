@@ -4,19 +4,17 @@
   min-height: 100vh;
 }
 
-:root {
-  --sunrise-1: #ffd7a1;
-  --sunrise-2: #ff9f7b;
-  --sunrise-3: #4d7cff;
-  --ink-soft: #1f2a44;
-}
-
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 12% 18%, rgba(255, 215, 161, 0.55), transparent 32%),
-    radial-gradient(circle at 84% 4%, rgba(255, 159, 123, 0.46), transparent 36%),
-    linear-gradient(130deg, var(--sunrise-3), #21487b 58%, #0e203e);
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--p-primary-200) 45%, transparent), transparent 32%),
+    radial-gradient(circle at 84% 4%, color-mix(in srgb, var(--p-primary-400) 35%, transparent), transparent 36%),
+    linear-gradient(
+      130deg,
+      color-mix(in srgb, var(--p-primary-900) 94%, black),
+      color-mix(in srgb, var(--p-primary-700) 85%, black) 58%,
+      color-mix(in srgb, var(--p-primary-500) 70%, black)
+    );
 }
 
 body::before {

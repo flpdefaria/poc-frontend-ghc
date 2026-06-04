@@ -24,10 +24,10 @@ const onSubmit = () => {
 <template>
   <Card class="login-card">
     <template #title>
-      <h2 class="title">Title</h2>
+      <h2 class="title">Login</h2>
     </template>
     <template #subtitle>
-      <p class="description">Description</p>
+      <p class="description">Access your workspace and continue your journey.</p>
     </template>
     <template #content>
       <form class="login-form" @submit.prevent="onSubmit">
@@ -52,20 +52,20 @@ const onSubmit = () => {
 <style scoped>
 .login-card {
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--p-content-border-color);
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: 0 24px 50px rgba(8, 20, 50, 0.28);
+  background: color-mix(in srgb, var(--p-surface-0) 86%, transparent);
+  box-shadow: 0 24px 50px color-mix(in srgb, var(--p-primary-950) 30%, transparent);
 }
 
 .title {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #13203d;
+  color: var(--p-text-color);
 }
 
 .description {
-  color: #425173;
+  color: var(--p-text-muted-color);
 }
 
 .login-form {
@@ -80,12 +80,13 @@ const onSubmit = () => {
 
 .create-account {
   justify-self: center;
-  color: #1c3f91;
+  color: var(--p-primary-color);
   text-decoration: none;
   font-weight: 600;
 }
 
 .create-account:hover {
+  color: var(--p-primary-700);
   text-decoration: underline;
 }
 </style>
