@@ -1,35 +1,37 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  min-height: 100vh;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+:root {
+  --sunrise-1: #ffd7a1;
+  --sunrise-2: #ff9f7b;
+  --sunrise-3: #4d7cff;
+  --ink-soft: #1f2a44;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 215, 161, 0.55), transparent 32%),
+    radial-gradient(circle at 84% 4%, rgba(255, 159, 123, 0.46), transparent 36%),
+    linear-gradient(130deg, var(--sunrise-3), #21487b 58%, #0e203e);
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at center, #000 36%, transparent 100%);
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+.p-card,
+.p-component {
+  font-family: 'Avenir Next', 'Nunito Sans', 'Segoe UI', sans-serif;
 }
