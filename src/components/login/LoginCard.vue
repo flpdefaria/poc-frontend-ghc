@@ -229,12 +229,14 @@ const onSubmit = () => {
   padding: 0;
 }
 
-.login-form :deep(.p-floatlabel-on label),
 .login-form :deep(.p-floatlabel input:focus ~ label),
-.login-form :deep(.p-floatlabel input.p-filled ~ label),
-.login-form :deep(.p-floatlabel input:not(:placeholder-shown) ~ label) {
+.login-form :deep(.p-floatlabel input.p-filled ~ label) {
   background: transparent !important;
-  color: var(--p-primary-600) !important;
+  color: var(--p-surface-500) !important;
+}
+
+.login-form :deep(.p-inputtext::placeholder) {
+  color: var(--p-surface-400);
 }
 
 .login-form :deep(.p-button) {
