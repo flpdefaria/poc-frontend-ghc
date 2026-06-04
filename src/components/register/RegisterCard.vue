@@ -7,34 +7,42 @@ import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
 
 const emit = defineEmits<{
-  submit: [payload: { email: string; password: string; remember: boolean }]
-  goToRegister: []
+  submit: [payload: { name: string; email: string; password: string; terms: boolean }]
+  goToLogin: []
 }>()
 
+const name = ref('')
 const email = ref('')
 const password = ref('')
-const remember = ref(true)
+const confirmPassword = ref('')
+const terms = ref(false)
 
 const onSubmit = () => {
   emit('submit', {
+    name: name.value,
     email: email.value,
     password: password.value,
-    remember: remember.value
+    terms: terms.value
   })
 }
 </script>
 
 <template>
-  <Card class="login-card">
+  <Card class="register-card">
     <template #title>
       <div class="header">
-        <h2 class="title">Sign in</h2>
-        <p class="description">Enter your credentials to access your account.</p>
+        <h2 class="title">Create account</h2>
+        <p class="description">Fill in the details below to get started.</p>
       </div>
     </template>
 
     <template #content>
-      <form class="login-form" @submit.prevent="onSubmit">
+      <form class="register-form" @submit.prevent="onSubmit">
+        <FloatLabel>
+          <InputText id="name" v-model="name" type="text" autocomplete="name" fluid />
+          <label for="name">Full name</label>
+        </FloatLabel>
+
         <FloatLabel>
           <InputText id="email" v-model="email" type="email" autocomplete="email" fluid />
           <label for="email">Email</label>
@@ -45,33 +53,39 @@ const onSubmit = () => {
             id="password"
             v-model="password"
             type="password"
-            autocomplete="current-password"
+            autocomplete="new-password"
             fluid
           />
           <label for="password">Password</label>
         </FloatLabel>
 
-        <div class="form-row">
-          <label class="remember">
-            <Checkbox v-model="remember" :binary="true" inputId="remember" />
-            <span>Remember me</span>
-          </label>
-
-          <Button
-            label="Forgot password?"
-            variant="link"
-            size="small"
-            class="forgot"
-            severity="secondary"
+        <FloatLabel>
+          <InputText
+            id="confirm-password"
+            v-model="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            fluid
           />
-        </div>
+          <label for="confirm-password">Confirm password</label>
+        </FloatLabel>
+
+        <label class="terms">
+          <Checkbox v-model="terms" :binary="true" inputId="terms" />
+          <span>
+            I agree to the
+            <a href="#" class="terms-link">Terms of Service</a>
+            and
+            <a href="#" class="terms-link">Privacy Policy</a>
+          </span>
+        </label>
 
         <Button
           type="submit"
-          label="Sign in"
+          label="Create account"
           icon="pi pi-arrow-right"
           icon-pos="right"
-          class="login-button"
+          class="submit-button"
           fluid
         />
 
@@ -83,13 +97,13 @@ const onSubmit = () => {
 
         <Button
           type="button"
-          label="Create an account"
-          icon="pi pi-user-plus"
+          label="Already have an account? Sign in"
+          icon="pi pi-sign-in"
           variant="outlined"
           severity="secondary"
-          class="create-account"
+          class="sign-in-button"
           fluid
-          @click="emit('goToRegister')"
+          @click="emit('goToLogin')"
         />
       </form>
     </template>
@@ -97,7 +111,7 @@ const onSubmit = () => {
 </template>
 
 <style scoped>
-.login-card {
+.register-card {
   border-radius: 22px;
   border: 1px solid color-mix(in srgb, var(--p-surface-0) 35%, transparent);
   background: color-mix(in srgb, var(--p-surface-0) 94%, transparent);
@@ -109,7 +123,7 @@ const onSubmit = () => {
   justify-self: center;
 }
 
-.login-card :deep(.p-card-body) {
+.register-card :deep(.p-card-body) {
   padding: 2.25rem 2rem;
   gap: 1rem;
 }
@@ -133,43 +147,37 @@ const onSubmit = () => {
   margin: 0;
 }
 
-.login-form {
+.register-form {
   margin-top: 1.25rem;
   display: grid;
   gap: 1.75rem;
 }
 
-.form-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: -0.25rem;
-}
-
-.remember {
+.terms {
   display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
+  align-items: flex-start;
+  gap: 0.6rem;
   font-size: 0.9rem;
   color: var(--p-text-muted-color);
   cursor: pointer;
   user-select: none;
+  margin-top: -0.5rem;
+  line-height: 1.5;
 }
 
-.forgot {
-  padding: 0 !important;
-  color: var(--p-primary-600) !important;
+.terms-link {
+  color: var(--p-primary-600);
+  text-decoration: none;
+  font-weight: 500;
 }
 
-.login-button {
-  margin-top: 0.25rem;
+.terms-link:hover {
+  text-decoration: underline;
+}
+
+.submit-button {
   font-weight: 600;
   letter-spacing: 0.01em;
-}
-
-.divider {
-  margin: 0.1rem 0;
 }
 
 .or-separator {
@@ -192,18 +200,11 @@ const onSubmit = () => {
   letter-spacing: 0.18em;
 }
 
-.divider-label {
-  color: var(--p-text-muted-color);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-}
-
-.create-account {
+.sign-in-button {
   font-weight: 600;
 }
 
-.login-form :deep(.p-inputtext) {
+.register-form :deep(.p-inputtext) {
   background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
   border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
   border-radius: 12px;
@@ -214,39 +215,39 @@ const onSubmit = () => {
     background-color 0.2s ease;
 }
 
-.login-form :deep(.p-inputtext:hover) {
+.register-form :deep(.p-inputtext:hover) {
   border-color: color-mix(in srgb, var(--p-primary-300) 60%, var(--p-content-border-color));
   background: color-mix(in srgb, var(--p-primary-50) 40%, var(--p-surface-0));
 }
 
-.login-form :deep(.p-inputtext:focus) {
+.register-form :deep(.p-inputtext:focus) {
   border-color: var(--p-primary-400);
   background: var(--p-surface-0);
   box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--p-primary-300) 28%, transparent);
 }
 
-.login-form :deep(.p-floatlabel label) {
+.register-form :deep(.p-floatlabel label) {
   color: var(--p-surface-400);
   background: transparent !important;
   padding: 0;
 }
 
-.login-form :deep(.p-floatlabel input:focus ~ label),
-.login-form :deep(.p-floatlabel input.p-filled ~ label) {
+.register-form :deep(.p-floatlabel input:focus ~ label),
+.register-form :deep(.p-floatlabel input.p-filled ~ label) {
   background: transparent !important;
   color: var(--p-surface-500) !important;
 }
 
-.login-form :deep(.p-inputtext::placeholder) {
+.register-form :deep(.p-inputtext::placeholder) {
   color: var(--p-surface-400);
 }
 
-.login-form :deep(.p-button) {
+.register-form :deep(.p-button) {
   border-radius: 12px;
   padding: 0.85rem 1rem;
 }
 
-.login-form :deep(.p-checkbox .p-checkbox-box) {
+.register-form :deep(.p-checkbox .p-checkbox-box) {
   background: var(--p-surface-0);
   border: 1px solid color-mix(in srgb, var(--p-primary-200) 60%, var(--p-content-border-color));
   border-radius: 6px;
@@ -255,21 +256,21 @@ const onSubmit = () => {
     background-color 0.15s ease;
 }
 
-.login-form :deep(.p-checkbox:not(.p-disabled):hover .p-checkbox-box) {
+.register-form :deep(.p-checkbox:not(.p-disabled):hover .p-checkbox-box) {
   background: var(--p-surface-0);
   border-color: var(--p-primary-500);
 }
 
-.login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-box),
-.login-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-box),
-.login-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-box) {
+.register-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-box),
+.register-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-box),
+.register-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-box) {
   background: var(--p-surface-0) !important;
   border-color: var(--p-primary-500) !important;
 }
 
-.login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-icon),
-.login-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-icon),
-.login-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-icon) {
+.register-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-icon),
+.register-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-icon),
+.register-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-icon) {
   color: var(--p-primary-500) !important;
   fill: var(--p-primary-500) !important;
 }
