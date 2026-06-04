@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Checkbox from 'primevue/checkbox'
@@ -16,8 +16,33 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const terms = ref(false)
+const submitted = ref(false)
+
+const errors = computed(() => ({
+  name: !name.value.trim() ? 'Full name is required.' : '',
+  email: !email.value.trim()
+    ? 'Email is required.'
+    : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
+      ? 'Enter a valid email address.'
+      : '',
+  password: !password.value
+    ? 'Password is required.'
+    : password.value.length < 8
+      ? 'Password must be at least 8 characters.'
+      : '',
+  confirmPassword: !confirmPassword.value
+    ? 'Please confirm your password.'
+    : confirmPassword.value !== password.value
+      ? 'Passwords do not match.'
+      : '',
+  terms: !terms.value ? 'You must accept the terms to continue.' : ''
+}))
+
+const hasErrors = computed(() => Object.values(errors.value).some(Boolean))
 
 const onSubmit = () => {
+  submitted.value = true
+  if (hasErrors.value) return
   emit('submit', {
     name: name.value,
     email: email.value,
@@ -38,47 +63,93 @@ const onSubmit = () => {
 
     <template #content>
       <form class="register-form" @submit.prevent="onSubmit">
-        <FloatLabel>
-          <InputText id="name" v-model="name" type="text" autocomplete="name" fluid />
-          <label for="name">Full name</label>
-        </FloatLabel>
+        <div class="field">
+          <FloatLabel>
+            <InputText
+              id="name"
+              v-model="name"
+              type="text"
+              autocomplete="name"
+              fluid
+              :invalid="submitted && !!errors.name"
+            />
+            <label for="name">Full name</label>
+          </FloatLabel>
+          <small v-if="submitted && errors.name" class="field-error">
+            <i class="pi pi-exclamation-circle" /> {{ errors.name }}
+          </small>
+        </div>
 
-        <FloatLabel>
-          <InputText id="email" v-model="email" type="email" autocomplete="email" fluid />
-          <label for="email">Email</label>
-        </FloatLabel>
+        <div class="field">
+          <FloatLabel>
+            <InputText
+              id="email"
+              v-model="email"
+              type="email"
+              autocomplete="email"
+              fluid
+              :invalid="submitted && !!errors.email"
+            />
+            <label for="email">Email</label>
+          </FloatLabel>
+          <small v-if="submitted && errors.email" class="field-error">
+            <i class="pi pi-exclamation-circle" /> {{ errors.email }}
+          </small>
+        </div>
 
-        <FloatLabel>
-          <InputText
-            id="password"
-            v-model="password"
-            type="password"
-            autocomplete="new-password"
-            fluid
-          />
-          <label for="password">Password</label>
-        </FloatLabel>
+        <div class="field">
+          <FloatLabel>
+            <InputText
+              id="password"
+              v-model="password"
+              type="password"
+              autocomplete="new-password"
+              fluid
+              :invalid="submitted && !!errors.password"
+            />
+            <label for="password">Password</label>
+          </FloatLabel>
+          <small v-if="submitted && errors.password" class="field-error">
+            <i class="pi pi-exclamation-circle" /> {{ errors.password }}
+          </small>
+        </div>
 
-        <FloatLabel>
-          <InputText
-            id="confirm-password"
-            v-model="confirmPassword"
-            type="password"
-            autocomplete="new-password"
-            fluid
-          />
-          <label for="confirm-password">Confirm password</label>
-        </FloatLabel>
+        <div class="field">
+          <FloatLabel>
+            <InputText
+              id="confirm-password"
+              v-model="confirmPassword"
+              type="password"
+              autocomplete="new-password"
+              fluid
+              :invalid="submitted && !!errors.confirmPassword"
+            />
+            <label for="confirm-password">Confirm password</label>
+          </FloatLabel>
+          <small v-if="submitted && errors.confirmPassword" class="field-error">
+            <i class="pi pi-exclamation-circle" /> {{ errors.confirmPassword }}
+          </small>
+        </div>
 
-        <label class="terms">
-          <Checkbox v-model="terms" :binary="true" inputId="terms" />
-          <span>
-            I agree to the
-            <a href="#" class="terms-link">Terms of Service</a>
-            and
-            <a href="#" class="terms-link">Privacy Policy</a>
-          </span>
-        </label>
+        <div class="terms-field">
+          <label class="terms">
+            <Checkbox
+              v-model="terms"
+              :binary="true"
+              inputId="terms"
+              :invalid="submitted && !!errors.terms"
+            />
+            <span>
+              I agree to the
+              <a href="#" class="terms-link">Terms of Service</a>
+              and
+              <a href="#" class="terms-link">Privacy Policy</a>
+            </span>
+          </label>
+          <small v-if="submitted && errors.terms" class="field-error">
+            <i class="pi pi-exclamation-circle" /> {{ errors.terms }}
+          </small>
+        </div>
 
         <Button
           type="submit"
@@ -153,6 +224,17 @@ const onSubmit = () => {
   gap: 1.75rem;
 }
 
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.terms-field {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: -0.5rem;
+}
+
 .terms {
   display: inline-flex;
   align-items: flex-start;
@@ -161,8 +243,15 @@ const onSubmit = () => {
   color: var(--p-text-muted-color);
   cursor: pointer;
   user-select: none;
-  margin-top: -0.5rem;
   line-height: 1.5;
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--p-red-500);
+  font-size: 0.8rem;
 }
 
 .terms-link {
@@ -209,6 +298,7 @@ const onSubmit = () => {
   border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
   border-radius: 12px;
   padding: 0.95rem 0.9rem;
+  color: var(--p-surface-700);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -245,6 +335,42 @@ const onSubmit = () => {
 .register-form :deep(.p-button) {
   border-radius: 12px;
   padding: 0.85rem 1rem;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.register-form :deep(.submit-button:not(:disabled):hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--p-primary-500) 45%, transparent);
+}
+
+.register-form :deep(.submit-button:not(:disabled):active) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--p-primary-500) 30%, transparent);
+}
+
+.register-form :deep(.sign-in-button:not(:disabled):hover) {
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--p-primary-100) 35%, transparent) !important;
+  border-color: color-mix(in srgb, var(--p-primary-400) 60%, var(--p-content-border-color)) !important;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--p-primary-400) 20%, transparent);
+}
+
+.register-form :deep(.sign-in-button:not(:disabled):active) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.register-form :deep(.p-inputtext.p-invalid) {
+  border-color: var(--p-red-400) !important;
+}
+
+.register-form :deep(.p-inputtext.p-invalid:focus) {
+  border-color: var(--p-red-400) !important;
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--p-red-300) 30%, transparent);
 }
 
 .register-form :deep(.p-checkbox .p-checkbox-box) {

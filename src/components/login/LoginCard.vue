@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Checkbox from 'primevue/checkbox'
@@ -14,8 +14,22 @@ const emit = defineEmits<{
 const email = ref('')
 const password = ref('')
 const remember = ref(true)
+const submitted = ref(false)
+
+const errors = computed(() => ({
+  email: !email.value.trim()
+    ? 'Email is required.'
+    : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
+      ? 'Enter a valid email address.'
+      : '',
+  password: !password.value ? 'Password is required.' : ''
+}))
+
+const hasErrors = computed(() => Object.values(errors.value).some(Boolean))
 
 const onSubmit = () => {
+  submitted.value = true
+  if (hasErrors.value) return
   emit('submit', {
     email: email.value,
     password: password.value,
@@ -35,21 +49,39 @@ const onSubmit = () => {
 
     <template #content>
       <form class="login-form" @submit.prevent="onSubmit">
-        <FloatLabel>
-          <InputText id="email" v-model="email" type="email" autocomplete="email" fluid />
-          <label for="email">Email</label>
-        </FloatLabel>
+        <div class="field">
+          <FloatLabel>
+            <InputText
+              id="email"
+              v-model="email"
+              type="email"
+              autocomplete="email"
+              fluid
+              :invalid="submitted && !!errors.email"
+            />
+            <label for="email">Email</label>
+          </FloatLabel>
+          <small v-if="submitted && errors.email" class="field-error">
+            <i class="pi pi-exclamation-circle" /> {{ errors.email }}
+          </small>
+        </div>
 
-        <FloatLabel>
-          <InputText
-            id="password"
-            v-model="password"
-            type="password"
-            autocomplete="current-password"
-            fluid
-          />
-          <label for="password">Password</label>
-        </FloatLabel>
+        <div class="field">
+          <FloatLabel>
+            <InputText
+              id="password"
+              v-model="password"
+              type="password"
+              autocomplete="current-password"
+              fluid
+              :invalid="submitted && !!errors.password"
+            />
+            <label for="password">Password</label>
+          </FloatLabel>
+          <small v-if="submitted && errors.password" class="field-error">
+            <i class="pi pi-exclamation-circle" /> {{ errors.password }}
+          </small>
+        </div>
 
         <div class="form-row">
           <label class="remember">
@@ -139,6 +171,19 @@ const onSubmit = () => {
   gap: 1.75rem;
 }
 
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--p-red-500);
+  font-size: 0.8rem;
+}
+
 .form-row {
   display: flex;
   align-items: center;
@@ -208,6 +253,7 @@ const onSubmit = () => {
   border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
   border-radius: 12px;
   padding: 0.95rem 0.9rem;
+  color: var(--p-surface-700);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -244,6 +290,42 @@ const onSubmit = () => {
 .login-form :deep(.p-button) {
   border-radius: 12px;
   padding: 0.85rem 1rem;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.login-form :deep(.login-button:not(:disabled):hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--p-primary-500) 45%, transparent);
+}
+
+.login-form :deep(.login-button:not(:disabled):active) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--p-primary-500) 30%, transparent);
+}
+
+.login-form :deep(.create-account:not(:disabled):hover) {
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--p-primary-100) 35%, transparent) !important;
+  border-color: color-mix(in srgb, var(--p-primary-400) 60%, var(--p-content-border-color)) !important;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--p-primary-400) 20%, transparent);
+}
+
+.login-form :deep(.create-account:not(:disabled):active) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.login-form :deep(.p-inputtext.p-invalid) {
+  border-color: var(--p-red-400) !important;
+}
+
+.login-form :deep(.p-inputtext.p-invalid:focus) {
+  border-color: var(--p-red-400) !important;
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--p-red-300) 30%, transparent);
 }
 
 .login-form :deep(.p-checkbox .p-checkbox-box) {
