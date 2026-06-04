@@ -5,6 +5,7 @@ import Card from 'primevue/card'
 import Checkbox from 'primevue/checkbox'
 import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
+import Password from 'primevue/password'
 
 const emit = defineEmits<{
   submit: [payload: { name: string; email: string; password: string; terms: boolean }]
@@ -17,8 +18,6 @@ const password = ref('')
 const confirmPassword = ref('')
 const terms = ref(false)
 const submitted = ref(false)
-const showPassword = ref(false)
-const showConfirmPassword = ref(false)
 
 const errors = computed(() => ({
   name: !name.value.trim() ? 'Full name is required.' : '',
@@ -101,25 +100,17 @@ const onSubmit = () => {
 
         <div class="field">
           <FloatLabel>
-            <InputText
-              id="password"
+            <Password
               v-model="password"
-              :type="showPassword ? 'text' : 'password'"
+              inputId="password"
+              toggleMask
+              :feedback="false"
               autocomplete="new-password"
               fluid
               :invalid="submitted && !!errors.password"
-              class="password-input"
             />
             <label for="password">Password</label>
           </FloatLabel>
-          <button
-            type="button"
-            class="eye-toggle"
-            :aria-label="showPassword ? 'Hide password' : 'Show password'"
-            @click="showPassword = !showPassword"
-          >
-            <i :class="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" />
-          </button>
           <small v-if="submitted && errors.password" class="field-error">
             <i class="pi pi-exclamation-circle" /> {{ errors.password }}
           </small>
@@ -127,25 +118,17 @@ const onSubmit = () => {
 
         <div class="field">
           <FloatLabel>
-            <InputText
-              id="confirm-password"
+            <Password
               v-model="confirmPassword"
-              :type="showConfirmPassword ? 'text' : 'password'"
+              inputId="confirm-password"
+              toggleMask
+              :feedback="false"
               autocomplete="new-password"
               fluid
               :invalid="submitted && !!errors.confirmPassword"
-              class="password-input"
             />
             <label for="confirm-password">Confirm password</label>
           </FloatLabel>
-          <button
-            type="button"
-            class="eye-toggle"
-            :aria-label="showConfirmPassword ? 'Hide password' : 'Show password'"
-            @click="showConfirmPassword = !showConfirmPassword"
-          >
-            <i :class="showConfirmPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" />
-          </button>
           <small v-if="submitted && errors.confirmPassword" class="field-error">
             <i class="pi pi-exclamation-circle" /> {{ errors.confirmPassword }}
           </small>
@@ -247,7 +230,6 @@ const onSubmit = () => {
 .field {
   display: grid;
   gap: 0.4rem;
-  position: relative;
 }
 
 .terms-field {
@@ -273,33 +255,6 @@ const onSubmit = () => {
   gap: 0.35rem;
   color: var(--p-red-500);
   font-size: 0.8rem;
-}
-
-.eye-toggle {
-  position: absolute;
-  top: 0.85rem;
-  right: 0.75rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.15rem;
-  color: var(--p-surface-400);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  transition: color 0.15s ease;
-  line-height: 1;
-  font-size: 1rem;
-  z-index: 1;
-}
-
-.eye-toggle:hover {
-  color: var(--p-primary-600);
-}
-
-.register-form :deep(.password-input) {
-  padding-right: 2.5rem;
 }
 
 .terms-link {
@@ -339,6 +294,20 @@ const onSubmit = () => {
 
 .sign-in-button {
   font-weight: 600;
+}
+
+.register-form :deep(.p-password) {
+  width: 100%;
+  position: relative;
+}
+
+.register-form :deep(.p-password-toggle-mask-icon) {
+  color: var(--p-surface-400);
+  transition: color 0.15s ease;
+}
+
+.register-form :deep(.p-password-toggle-mask-icon:hover) {
+  color: var(--p-primary-600);
 }
 
 .register-form :deep(.p-inputtext) {
