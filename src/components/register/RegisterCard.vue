@@ -17,6 +17,8 @@ const password = ref('')
 const confirmPassword = ref('')
 const terms = ref(false)
 const submitted = ref(false)
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
 
 const errors = computed(() => ({
   name: !name.value.trim() ? 'Full name is required.' : '',
@@ -102,13 +104,22 @@ const onSubmit = () => {
             <InputText
               id="password"
               v-model="password"
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               autocomplete="new-password"
               fluid
               :invalid="submitted && !!errors.password"
+              class="password-input"
             />
             <label for="password">Password</label>
           </FloatLabel>
+          <button
+            type="button"
+            class="eye-toggle"
+            :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            @click="showPassword = !showPassword"
+          >
+            <i :class="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" />
+          </button>
           <small v-if="submitted && errors.password" class="field-error">
             <i class="pi pi-exclamation-circle" /> {{ errors.password }}
           </small>
@@ -119,13 +130,22 @@ const onSubmit = () => {
             <InputText
               id="confirm-password"
               v-model="confirmPassword"
-              type="password"
+              :type="showConfirmPassword ? 'text' : 'password'"
               autocomplete="new-password"
               fluid
               :invalid="submitted && !!errors.confirmPassword"
+              class="password-input"
             />
             <label for="confirm-password">Confirm password</label>
           </FloatLabel>
+          <button
+            type="button"
+            class="eye-toggle"
+            :aria-label="showConfirmPassword ? 'Hide password' : 'Show password'"
+            @click="showConfirmPassword = !showConfirmPassword"
+          >
+            <i :class="showConfirmPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" />
+          </button>
           <small v-if="submitted && errors.confirmPassword" class="field-error">
             <i class="pi pi-exclamation-circle" /> {{ errors.confirmPassword }}
           </small>
@@ -227,6 +247,7 @@ const onSubmit = () => {
 .field {
   display: grid;
   gap: 0.4rem;
+  position: relative;
 }
 
 .terms-field {
@@ -252,6 +273,33 @@ const onSubmit = () => {
   gap: 0.35rem;
   color: var(--p-red-500);
   font-size: 0.8rem;
+}
+
+.eye-toggle {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem;
+  color: var(--p-surface-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+  line-height: 1;
+  font-size: 1rem;
+  z-index: 1;
+}
+
+.eye-toggle:hover {
+  color: var(--p-primary-600);
+}
+
+.register-form :deep(.password-input) {
+  padding-right: 2.5rem;
 }
 
 .terms-link {

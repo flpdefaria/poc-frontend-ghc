@@ -15,6 +15,7 @@ const email = ref('')
 const password = ref('')
 const remember = ref(true)
 const submitted = ref(false)
+const showPassword = ref(false)
 
 const errors = computed(() => ({
   email: !email.value.trim()
@@ -71,13 +72,22 @@ const onSubmit = () => {
             <InputText
               id="password"
               v-model="password"
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               autocomplete="current-password"
               fluid
               :invalid="submitted && !!errors.password"
+              class="password-input"
             />
             <label for="password">Password</label>
           </FloatLabel>
+          <button
+            type="button"
+            class="eye-toggle"
+            :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            @click="showPassword = !showPassword"
+          >
+            <i :class="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" />
+          </button>
           <small v-if="submitted && errors.password" class="field-error">
             <i class="pi pi-exclamation-circle" /> {{ errors.password }}
           </small>
@@ -174,6 +184,7 @@ const onSubmit = () => {
 .field {
   display: grid;
   gap: 0.4rem;
+  position: relative;
 }
 
 .field-error {
@@ -182,6 +193,33 @@ const onSubmit = () => {
   gap: 0.35rem;
   color: var(--p-red-500);
   font-size: 0.8rem;
+}
+
+.eye-toggle {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem;
+  color: var(--p-surface-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+  line-height: 1;
+  font-size: 1rem;
+  z-index: 1;
+}
+
+.eye-toggle:hover {
+  color: var(--p-primary-600);
+}
+
+.login-form :deep(.password-input) {
+  padding-right: 2.5rem;
 }
 
 .form-row {
