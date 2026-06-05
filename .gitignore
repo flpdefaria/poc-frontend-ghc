@@ -28,6 +28,9 @@ coverage
 
 .eslintcache
 
+# GitHub Copilot customizations (local only)
+.github/
+
 # Cypress
 /cypress/videos/
 /cypress/screenshots/
