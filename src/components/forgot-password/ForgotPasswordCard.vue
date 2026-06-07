@@ -244,8 +244,6 @@ const onSubmit = () => {
 .forgot-form :deep(.p-inputtext) {
   background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
   border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
-  border-radius: 12px;
-  padding: 0.95rem 0.9rem;
   color: var(--p-surface-700);
   transition:
     border-color 0.2s ease,
@@ -261,7 +259,6 @@ const onSubmit = () => {
 .forgot-form :deep(.p-inputtext:focus) {
   border-color: var(--p-primary-400);
   background: var(--p-surface-0);
-  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--p-primary-300) 28%, transparent);
 }
 
 .forgot-form :deep(.p-floatlabel label) {
@@ -286,13 +283,11 @@ const onSubmit = () => {
 
 .forgot-form :deep(.p-inputtext.p-invalid:focus) {
   border-color: var(--p-red-400) !important;
-  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--p-red-300) 30%, transparent);
 }
 
 /* Buttons */
 .forgot-form :deep(.p-button),
 .success-state :deep(.p-button) {
-  border-radius: 12px;
   padding: 0.85rem 1rem;
   transition:
     background 0.2s ease,
