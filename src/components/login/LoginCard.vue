@@ -91,7 +91,6 @@ const onSubmit = () => {
             <Checkbox v-model="remember" :binary="true" inputId="remember" />
             <span>Remember me</span>
           </label>
-
           <Button
             label="Forgot password?"
             variant="link"
@@ -217,10 +216,6 @@ const onSubmit = () => {
   letter-spacing: 0.01em;
 }
 
-.divider {
-  margin: 0.1rem 0;
-}
-
 .or-separator {
   display: flex;
   align-items: center;
@@ -235,13 +230,6 @@ const onSubmit = () => {
 }
 
 .or-label {
-  color: var(--p-text-muted-color);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-}
-
-.divider-label {
   color: var(--p-text-muted-color);
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -267,7 +255,7 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-inputtext) {
-  background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
+  background: var(--p-surface-0);
   border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
   color: var(--p-surface-700);
   transition:
@@ -278,7 +266,7 @@ const onSubmit = () => {
 
 .login-form :deep(.p-inputtext:hover) {
   border-color: color-mix(in srgb, var(--p-primary-300) 60%, var(--p-content-border-color));
-  background: color-mix(in srgb, var(--p-primary-50) 40%, var(--p-surface-0));
+  background: var(--p-surface-0);
 }
 
 .login-form :deep(.p-inputtext:focus) {
@@ -334,10 +322,6 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-inputtext.p-invalid) {
-  border-color: var(--p-red-400) !important;
-}
-
-.login-form :deep(.p-inputtext.p-invalid:focus) {
   border-color: var(--p-red-400) !important;
 }
 

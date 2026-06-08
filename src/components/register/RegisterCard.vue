@@ -36,7 +36,7 @@ const errors = computed(() => ({
     : confirmPassword.value !== password.value
       ? 'Passwords do not match.'
       : '',
-  terms: !terms.value ? 'You must accept the terms to continue.' : ''
+  terms: !terms.value ? 'You must accept the terms.' : ''
 }))
 
 const hasErrors = computed(() => Object.values(errors.value).some(Boolean))
@@ -84,14 +84,14 @@ const onSubmit = () => {
         <div class="field">
           <FloatLabel>
             <InputText
-              id="email"
+              id="reg-email"
               v-model="email"
               type="email"
               autocomplete="email"
               fluid
               :invalid="submitted && !!errors.email"
             />
-            <label for="email">Email</label>
+            <label for="reg-email">Email</label>
           </FloatLabel>
           <small v-if="submitted && errors.email" class="field-error">
             <i class="pi pi-exclamation-circle" /> {{ errors.email }}
@@ -102,14 +102,14 @@ const onSubmit = () => {
           <FloatLabel>
             <Password
               v-model="password"
-              inputId="password"
+              inputId="reg-password"
               toggleMask
               :feedback="false"
               autocomplete="new-password"
               fluid
               :invalid="submitted && !!errors.password"
             />
-            <label for="password">Password</label>
+            <label for="reg-password">Password</label>
           </FloatLabel>
           <small v-if="submitted && errors.password" class="field-error">
             <i class="pi pi-exclamation-circle" /> {{ errors.password }}
@@ -134,22 +134,12 @@ const onSubmit = () => {
           </small>
         </div>
 
-        <div class="terms-field">
-          <label class="terms">
-            <Checkbox
-              v-model="terms"
-              :binary="true"
-              inputId="terms"
-              :invalid="submitted && !!errors.terms"
-            />
-            <span>
-              I agree to the
-              <a href="#" class="terms-link">Terms of Service</a>
-              and
-              <a href="#" class="terms-link">Privacy Policy</a>
-            </span>
+        <div class="terms-row">
+          <label class="terms-label">
+            <Checkbox v-model="terms" :binary="true" inputId="terms" :invalid="submitted && !!errors.terms" />
+            <span>I agree to the <strong>Terms of Service</strong> and <strong>Privacy Policy</strong></span>
           </label>
-          <small v-if="submitted && errors.terms" class="field-error">
+          <small v-if="submitted && errors.terms" class="field-error" style="margin-top: 0.25rem;">
             <i class="pi pi-exclamation-circle" /> {{ errors.terms }}
           </small>
         </div>
@@ -157,9 +147,9 @@ const onSubmit = () => {
         <Button
           type="submit"
           label="Create account"
-          icon="pi pi-arrow-right"
+          icon="pi pi-user-plus"
           icon-pos="right"
-          class="submit-button"
+          class="register-button"
           fluid
         />
 
@@ -171,11 +161,11 @@ const onSubmit = () => {
 
         <Button
           type="button"
-          label="Already have an account? Sign in"
+          label="Sign in instead"
           icon="pi pi-sign-in"
           variant="outlined"
           severity="secondary"
-          class="sign-in-button"
+          class="signin-button"
           fluid
           @click="emit('goToLogin')"
         />
@@ -232,23 +222,6 @@ const onSubmit = () => {
   gap: 0.4rem;
 }
 
-.terms-field {
-  display: grid;
-  gap: 0.5rem;
-  margin-top: -0.5rem;
-}
-
-.terms {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  font-size: 0.9rem;
-  color: var(--p-text-muted-color);
-  cursor: pointer;
-  user-select: none;
-  line-height: 1.5;
-}
-
 .field-error {
   display: flex;
   align-items: center;
@@ -257,19 +230,21 @@ const onSubmit = () => {
   font-size: 0.8rem;
 }
 
-.terms-link {
-  color: var(--p-primary-600);
-  text-decoration: none;
-  font-weight: 500;
+.terms-row {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: -0.25rem;
 }
 
-.terms-link:hover {
-  text-decoration: underline;
-}
-
-.submit-button {
-  font-weight: 600;
-  letter-spacing: 0.01em;
+.terms-label {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  color: var(--p-text-muted-color);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.4;
 }
 
 .or-separator {
@@ -292,10 +267,6 @@ const onSubmit = () => {
   letter-spacing: 0.18em;
 }
 
-.sign-in-button {
-  font-weight: 600;
-}
-
 .register-form :deep(.p-password) {
   width: 100%;
   position: relative;
@@ -311,7 +282,7 @@ const onSubmit = () => {
 }
 
 .register-form :deep(.p-inputtext) {
-  background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
+  background: var(--p-surface-0);
   border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
   color: var(--p-surface-700);
   transition:
@@ -322,7 +293,7 @@ const onSubmit = () => {
 
 .register-form :deep(.p-inputtext:hover) {
   border-color: color-mix(in srgb, var(--p-primary-300) 60%, var(--p-content-border-color));
-  background: color-mix(in srgb, var(--p-primary-50) 40%, var(--p-surface-0));
+  background: var(--p-surface-0);
 }
 
 .register-form :deep(.p-inputtext:focus) {
@@ -342,10 +313,6 @@ const onSubmit = () => {
   color: var(--p-surface-500) !important;
 }
 
-.register-form :deep(.p-inputtext::placeholder) {
-  color: var(--p-surface-400);
-}
-
 .register-form :deep(.p-button) {
   padding: 0.85rem 1rem;
   transition:
@@ -355,33 +322,29 @@ const onSubmit = () => {
     transform 0.15s ease;
 }
 
-.register-form :deep(.submit-button:not(:disabled):hover) {
+.register-form :deep(.register-button:not(:disabled):hover) {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px color-mix(in srgb, var(--p-primary-500) 45%, transparent);
 }
 
-.register-form :deep(.submit-button:not(:disabled):active) {
+.register-form :deep(.register-button:not(:disabled):active) {
   transform: translateY(0);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--p-primary-500) 30%, transparent);
 }
 
-.register-form :deep(.sign-in-button:not(:disabled):hover) {
+.register-form :deep(.signin-button:not(:disabled):hover) {
   transform: translateY(-2px);
   background: color-mix(in srgb, var(--p-primary-100) 35%, transparent) !important;
   border-color: color-mix(in srgb, var(--p-primary-400) 60%, var(--p-content-border-color)) !important;
   box-shadow: 0 6px 18px color-mix(in srgb, var(--p-primary-400) 20%, transparent);
 }
 
-.register-form :deep(.sign-in-button:not(:disabled):active) {
+.register-form :deep(.signin-button:not(:disabled):active) {
   transform: translateY(0);
   box-shadow: none;
 }
 
 .register-form :deep(.p-inputtext.p-invalid) {
-  border-color: var(--p-red-400) !important;
-}
-
-.register-form :deep(.p-inputtext.p-invalid:focus) {
   border-color: var(--p-red-400) !important;
 }
 
