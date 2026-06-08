@@ -10,13 +10,6 @@ const features = [
 
 <template>
   <section class="hero-panel">
-    <div class="brand">
-      <span class="brand-mark">
-        <i class="pi pi-prime" />
-      </span>
-      <span class="brand-name">PrimeVue</span>
-    </div>
-
     <Tag value="Welcome back" rounded class="eyebrow" />
 
     <h1 class="hero-title">
@@ -26,7 +19,7 @@ const features = [
 
     <p class="hero-copy">
       Access your workspace and pick up exactly where you left off — with a polished
-      experience powered by PrimeVue.
+      experience powered by our platform.
     </p>
 
     <ul class="feature-list">
@@ -46,32 +39,6 @@ const features = [
   display: grid;
   gap: 1.5rem;
   max-width: 30rem;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: color-mix(in srgb, var(--p-surface-0) 95%, var(--p-primary-100));
-}
-
-.brand-mark {
-  width: 2.25rem;
-  height: 2.25rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--p-primary-400) 28%, transparent);
-  border: 1px solid color-mix(in srgb, var(--p-primary-300) 35%, transparent);
-  color: var(--p-primary-100);
-  font-size: 1.1rem;
-}
-
-.brand-name {
-  font-size: 1rem;
 }
 
 .eyebrow {
@@ -143,7 +110,6 @@ const features = [
     margin: 0 auto;
   }
 
-  .brand,
   .eyebrow {
     justify-self: center;
   }
