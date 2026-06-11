@@ -134,12 +134,12 @@ const onSubmit = () => {
 <style scoped>
 .login-card {
   border-radius: 22px;
-  border: 1px solid color-mix(in srgb, var(--p-surface-0) 35%, transparent);
-  background: color-mix(in srgb, var(--p-surface-0) 94%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(18px);
   box-shadow:
-    0 1px 0 color-mix(in srgb, var(--p-surface-0) 60%, transparent) inset,
-    0 24px 60px color-mix(in srgb, var(--p-primary-950) 28%, transparent);
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 24px 60px rgba(23, 37, 84, 0.28);
   width: min(420px, 100%);
   justify-self: center;
 }
@@ -158,12 +158,12 @@ const onSubmit = () => {
   font-size: 1.65rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--p-primary-700);
+  color: #1d4ed8;
   margin: 0;
 }
 
 .description {
-  color: var(--p-text-muted-color);
+  color: #6b7280;
   font-size: 0.95rem;
   margin: 0;
 }
@@ -183,7 +183,7 @@ const onSubmit = () => {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  color: var(--p-red-500);
+  color: #ef4444;
   font-size: 0.8rem;
 }
 
@@ -200,14 +200,14 @@ const onSubmit = () => {
   align-items: center;
   gap: 0.55rem;
   font-size: 0.9rem;
-  color: var(--p-text-muted-color);
+  color: #6b7280;
   cursor: pointer;
   user-select: none;
 }
 
 .forgot {
   padding: 0 !important;
-  color: var(--p-primary-600) !important;
+  color: #2563eb !important;
 }
 
 .login-button {
@@ -226,11 +226,11 @@ const onSubmit = () => {
 .or-line {
   flex: 1;
   height: 1px;
-  background: color-mix(in srgb, var(--p-content-border-color) 80%, transparent);
+  background: rgba(209, 213, 219, 0.8);
 }
 
 .or-label {
-  color: var(--p-text-muted-color);
+  color: #6b7280;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -246,18 +246,20 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-password-toggle-mask-icon) {
-  color: var(--p-surface-400);
+  color: #9ca3af;
   transition: color 0.15s ease;
 }
 
 .login-form :deep(.p-password-toggle-mask-icon:hover) {
-  color: var(--p-primary-600);
+  color: #2563eb;
 }
 
 .login-form :deep(.p-inputtext) {
-  background: var(--p-surface-0);
-  border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
-  color: var(--p-surface-700);
+  background: #ffffff;
+  border-color: #93c5fd;
+  color: #374151;
+  padding: 0.95rem 0.9rem;
+  border-radius: 12px;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -265,17 +267,18 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-inputtext:hover) {
-  border-color: color-mix(in srgb, var(--p-primary-300) 60%, var(--p-content-border-color));
-  background: var(--p-surface-0);
+  border-color: #60a5fa;
+  background: #ffffff;
 }
 
 .login-form :deep(.p-inputtext:focus) {
-  border-color: var(--p-primary-400);
-  background: var(--p-surface-0);
+  border-color: #60a5fa;
+  background: #ffffff;
+  box-shadow: 0 0 0 0.22rem rgba(147, 197, 253, 0.28);
 }
 
 .login-form :deep(.p-floatlabel label) {
-  color: var(--p-surface-400);
+  color: #9ca3af;
   background: transparent !important;
   padding: 0;
 }
@@ -283,11 +286,11 @@ const onSubmit = () => {
 .login-form :deep(.p-floatlabel input:focus ~ label),
 .login-form :deep(.p-floatlabel input.p-filled ~ label) {
   background: transparent !important;
-  color: var(--p-surface-500) !important;
+  color: #6b7280 !important;
 }
 
 .login-form :deep(.p-inputtext::placeholder) {
-  color: var(--p-surface-400);
+  color: #9ca3af;
 }
 
 .login-form :deep(.p-button) {
@@ -301,19 +304,19 @@ const onSubmit = () => {
 
 .login-form :deep(.login-button:not(:disabled):hover) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--p-primary-500) 45%, transparent);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.45);
 }
 
 .login-form :deep(.login-button:not(:disabled):active) {
   transform: translateY(0);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--p-primary-500) 30%, transparent);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.30);
 }
 
 .login-form :deep(.create-account:not(:disabled):hover) {
   transform: translateY(-2px);
-  background: color-mix(in srgb, var(--p-primary-100) 35%, transparent) !important;
-  border-color: color-mix(in srgb, var(--p-primary-400) 60%, var(--p-content-border-color)) !important;
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--p-primary-400) 20%, transparent);
+  background: rgba(219, 234, 254, 0.35) !important;
+  border-color: rgba(96, 165, 250, 0.6) !important;
+  box-shadow: 0 6px 18px rgba(96, 165, 250, 0.20);
 }
 
 .login-form :deep(.create-account:not(:disabled):active) {
@@ -322,12 +325,12 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-inputtext.p-invalid) {
-  border-color: var(--p-red-400) !important;
+  border-color: #f87171 !important;
 }
 
 .login-form :deep(.p-checkbox .p-checkbox-box) {
-  background: var(--p-surface-0);
-  border: 1px solid color-mix(in srgb, var(--p-primary-200) 60%, var(--p-content-border-color));
+  background: #ffffff;
+  border: 1px solid #93c5fd;
   border-radius: 6px;
   transition:
     border-color 0.15s ease,
@@ -335,21 +338,21 @@ const onSubmit = () => {
 }
 
 .login-form :deep(.p-checkbox:not(.p-disabled):hover .p-checkbox-box) {
-  background: var(--p-surface-0);
-  border-color: var(--p-primary-500);
+  background: #ffffff;
+  border-color: #3b82f6;
 }
 
 .login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-box),
 .login-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-box),
 .login-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-box) {
-  background: var(--p-surface-0) !important;
-  border-color: var(--p-primary-500) !important;
+  background: #ffffff !important;
+  border-color: #3b82f6 !important;
 }
 
 .login-form :deep(.p-checkbox.p-checkbox-checked .p-checkbox-icon),
 .login-form :deep(.p-checkbox.p-checkbox-checked:hover .p-checkbox-icon),
 .login-form :deep(.p-checkbox.p-checkbox-checked.p-focus .p-checkbox-icon) {
-  color: var(--p-primary-500) !important;
-  fill: var(--p-primary-500) !important;
+  color: #3b82f6 !important;
+  fill: #3b82f6 !important;
 }
 </style>
