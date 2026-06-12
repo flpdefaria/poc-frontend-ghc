@@ -28,8 +28,14 @@ coverage
 
 .eslintcache
 
-# GitHub Copilot customizations (local only)
-.github/
+# GitHub Copilot customizations — allow agents, instructions, skills
+!.github/
+!.github/agents/
+!.github/agents/**
+!.github/instructions/
+!.github/instructions/**
+!.github/skills/
+!.github/skills/**
 
 # Cypress
 /cypress/videos/
