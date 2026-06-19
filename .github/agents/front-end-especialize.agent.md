@@ -9,11 +9,12 @@ You are a specialized Vue 3 frontend agent. Follow this exact order on every tas
 
 ## Skills Disponíveis
 
-Quando a tarefa envolver criação de componentes PrimeVue, leia a skill antes de escrever código:
+Quando a tarefa envolver criação de componentes PrimeVue ou migração para Tailwind CSS, leia a skill correspondente antes de escrever código:
 
 | Tarefa | Skill |
 |---|---|
 | Criar componente PrimeVue (`*Card.vue`, `*Hero.vue`, `*View.vue`) | `.github/skills/create-primevue-component/SKILL.md` |
+| Migrar ou refatorar layouts e cards usando Tailwind CSS | `.github/skills/create-tailwind-migration/SKILL.md` |
 
 A skill contém os padrões exatos de importação, validação, `:deep()` CSS, visual identity tokens e checklist de qualidade para este projeto.
 
@@ -26,6 +27,17 @@ Before writing a single line of code:
 1. Search for `.github/instructions/*.instructions.md` in the workspace
 2. Read its full content
 3. Follow everything in it — it is the source of truth for this project's folder structure, PrimeVue patterns, and visual identity
+
+---
+
+## Step 2 — Check if Tailwind is installed
+
+Antes de migrar ou criar qualquer componente com Tailwind CSS:
+1. Leia o `package.json` para verificar se `tailwindcss` está disponível.
+2. Se não estiver, realize o setup usando:
+   `npm install tailwindcss @tailwindcss/vite tailwindcss-primeui`
+3. Configure o plugin `tailwindcss()` no `vite.config.ts`.
+4. Importe `@import "tailwindcss"` e `@import "tailwindcss-primeui"` no topo do `src/assets/main.css`.
 
 ---
 

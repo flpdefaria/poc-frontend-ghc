@@ -221,6 +221,20 @@ Types for payloads always come from `src/types/*.types.ts` — never defined inl
 
 ## Visual Identity
 
+### Hybrid Styling Rule (Tailwind CSS Integration)
+
+Whenever Tailwind CSS is configured, the styling responsibilities are split as follows to protect our PrimeVue theme and visual identity:
+
+| Responsibility | Tool |
+|---|---|
+| Layout, spacing, inline alignment, flex, grid | **Tailwind CSS** (e.g., `flex`, `grid`, `gap-4`, `p-6`, `mx-auto`) |
+| Typography (size, weight, neutral utility text colors) | **Tailwind CSS** (e.g., `text-sm`, `font-bold`, `text-surface-500`) |
+| Page / Card / Brand background & borders | **Scoped CSS** with `var(--p-surface-*)` or `color-mix()` |
+| Glassmorphism, backdrop filters, box shadow glows | **Scoped CSS** with native CSS property blendings |
+| PrimeVue component deep overrides (`:deep()`) | **Scoped CSS** in component's scoped `<style>` section |
+| Advanced interactive state animations (e.g., hover translateY + glow) | **Scoped <style>** for precise compound animation rules |
+| Hardcoded hexadecimal or RGB color strings | **Strictly Forbidden** (always compile via tokens or `color-mix()`) |
+
 ### Theme — Blue Aura Preset (`main.ts`)
 
 The primary palette is always **blue**. Never change this:

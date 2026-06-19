@@ -9,22 +9,22 @@ const features = [
 </script>
 
 <template>
-  <section class="hero-panel">
-    <Tag value="Welcome back" rounded class="eyebrow" />
+  <section class="flex flex-col gap-6 max-w-[30rem] lg:text-left text-center items-center lg:items-start mx-auto lg:mx-0">
+    <Tag value="Welcome back" rounded class="lg:self-start self-center eyebrow" />
 
-    <h1 class="hero-title">
+    <h1 class="text-4xl lg:text-5xl font-bold tracking-tight leading-[1.08] hero-title">
       Sign in to continue<br />
       <span class="hero-title-accent">your journey.</span>
     </h1>
 
-    <p class="hero-copy">
+    <p class="text-[1.05rem] leading-relaxed hero-copy">
       Access your workspace and pick up exactly where you left off — with a polished
       experience powered by our platform.
     </p>
 
-    <ul class="feature-list">
-      <li v-for="feature in features" :key="feature.text" class="feature">
-        <span class="feature-icon">
+    <ul class="flex flex-col gap-3.5 w-full items-start lg:items-start justify-center lg:justify-start">
+      <li v-for="feature in features" :key="feature.text" class="flex items-center gap-3.5 text-sm feature-text">
+        <span class="w-[1.85rem] h-[1.85rem] flex items-center justify-center rounded-full feature-icon">
           <i :class="feature.icon" />
         </span>
         <span>{{ feature.text }}</span>
@@ -34,15 +34,7 @@ const features = [
 </template>
 
 <style scoped>
-.hero-panel {
-  color: color-mix(in srgb, var(--p-surface-0) 92%, var(--p-primary-50));
-  display: grid;
-  gap: 1.5rem;
-  max-width: 30rem;
-}
-
 .eyebrow {
-  justify-self: start;
   background: color-mix(in srgb, var(--p-primary-400) 22%, transparent) !important;
   color: color-mix(in srgb, var(--p-surface-0) 92%, var(--p-primary-100)) !important;
   border: 1px solid color-mix(in srgb, var(--p-primary-300) 30%, transparent);
@@ -50,10 +42,6 @@ const features = [
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 5.4vw, 3.6rem);
-  line-height: 1.08;
-  font-weight: 700;
-  letter-spacing: -0.02em;
   color: color-mix(in srgb, var(--p-surface-0) 98%, var(--p-primary-50));
 }
 
@@ -69,53 +57,17 @@ const features = [
 }
 
 .hero-copy {
-  font-size: 1.05rem;
-  line-height: 1.6;
   color: color-mix(in srgb, var(--p-surface-0) 75%, var(--p-primary-200));
 }
 
-.feature-list {
-  list-style: none;
-  padding: 0;
-  margin: 0.5rem 0 0;
-  display: grid;
-  gap: 0.85rem;
-}
-
-.feature {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
+.feature-text {
   color: color-mix(in srgb, var(--p-surface-0) 88%, var(--p-primary-100));
-  font-size: 0.95rem;
 }
 
 .feature-icon {
-  width: 1.85rem;
-  height: 1.85rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
   background: color-mix(in srgb, var(--p-primary-400) 22%, transparent);
   border: 1px solid color-mix(in srgb, var(--p-primary-300) 28%, transparent);
   color: var(--p-primary-100);
   font-size: 0.85rem;
-}
-
-@media (max-width: 900px) {
-  .hero-panel {
-    text-align: center;
-    justify-items: center;
-    margin: 0 auto;
-  }
-
-  .eyebrow {
-    justify-self: center;
-  }
-
-  .feature-list {
-    justify-items: start;
-  }
 }
 </style>

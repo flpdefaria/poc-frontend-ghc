@@ -33,11 +33,11 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <Card class="forgot-card">
+  <Card class="w-full max-w-[420px] mx-auto forgot-card">
     <template #title>
-      <div class="header">
-        <h2 class="title">Reset password</h2>
-        <p class="description">
+      <div class="flex flex-col gap-1.5">
+        <h2 class="text-2xl font-bold tracking-tight text-surface-900 m-0">Reset password</h2>
+        <p class="text-sm text-surface-500 m-0">
           Enter your email and we'll send you a link to reset your password.
         </p>
       </div>
@@ -45,12 +45,12 @@ const onSubmit = () => {
 
     <template #content>
       <!-- Success state -->
-      <div v-if="success" class="success-state">
-        <span class="success-icon">
-          <i class="pi pi-check" />
+      <div v-if="success" class="mt-5 flex flex-col gap-5 items-center text-center">
+        <span class="w-14 h-14 rounded-full flex items-center justify-center success-icon">
+          <i class="pi pi-check text-2xl" />
         </span>
-        <h3 class="success-title">Check your inbox</h3>
-        <p class="success-copy">
+        <h3 class="text-lg font-bold text-surface-900 m-0">Check your inbox</h3>
+        <p class="text-sm text-surface-500 max-w-sm m-0 leading-relaxed">
           We sent a password reset link to <strong>{{ email }}</strong>. It may take a few minutes to arrive.
         </p>
         <Button
@@ -58,16 +58,16 @@ const onSubmit = () => {
           icon="pi pi-arrow-left"
           variant="outlined"
           severity="secondary"
-          class="back-button"
+          class="w-full font-semibold"
           fluid
           @click="emit('goToLogin')"
         />
       </div>
 
       <!-- Form state -->
-      <form v-else class="forgot-form" @submit.prevent="onSubmit">
-        <div class="field">
-          <FloatLabel>
+      <form v-else class="mt-5 flex flex-col gap-7" @submit.prevent="onSubmit">
+        <div class="flex flex-col gap-1.5">
+          <FloatLabel class="w-full">
             <InputText
               id="email"
               v-model="email"
@@ -75,10 +75,11 @@ const onSubmit = () => {
               autocomplete="email"
               fluid
               :invalid="submitted && !!errors.email"
+              class="w-full"
             />
             <label for="email">Email</label>
           </FloatLabel>
-          <small v-if="submitted && errors.email" class="field-error">
+          <small v-if="submitted && errors.email" class="flex items-center gap-1.5 text-xs text-red-500">
             <i class="pi pi-exclamation-circle" /> {{ errors.email }}
           </small>
         </div>
@@ -88,14 +89,14 @@ const onSubmit = () => {
           label="Send reset link"
           icon="pi pi-send"
           icon-pos="right"
-          class="submit-button"
+          class="mt-1 font-semibold tracking-wide"
           fluid
         />
 
-        <div class="or-separator" role="separator" aria-label="or">
-          <span class="or-line" />
-          <span class="or-label">or</span>
-          <span class="or-line" />
+        <div class="flex items-center gap-3.5 my-1" role="separator" aria-label="or">
+          <span class="flex-1 h-px bg-surface-200" />
+          <span class="text-xs uppercase text-surface-400 tracking-[0.18em]">or</span>
+          <span class="flex-1 h-px bg-surface-200" />
         </div>
 
         <Button
@@ -104,7 +105,7 @@ const onSubmit = () => {
           icon="pi pi-arrow-left"
           variant="outlined"
           severity="secondary"
-          class="back-button"
+          class="font-semibold uppercase tracking-[0.18em] text-xs"
           fluid
           @click="emit('goToLogin')"
         />
@@ -122,8 +123,6 @@ const onSubmit = () => {
   box-shadow:
     0 1px 0 color-mix(in srgb, var(--p-surface-0) 60%, transparent) inset,
     0 24px 60px color-mix(in srgb, var(--p-primary-950) 28%, transparent);
-  width: min(420px, 100%);
-  justify-self: center;
 }
 
 .forgot-card :deep(.p-card-body) {
@@ -131,118 +130,15 @@ const onSubmit = () => {
   gap: 1rem;
 }
 
-.header {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.title {
-  font-size: 1.65rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--p-primary-700);
-  margin: 0;
-}
-
-.description {
-  color: var(--p-text-muted-color);
-  font-size: 0.95rem;
-  margin: 0;
-}
-
-/* Form */
-.forgot-form {
-  margin-top: 1.25rem;
-  display: grid;
-  gap: 1.75rem;
-}
-
-.field {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.field-error {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  color: var(--p-red-500);
-  font-size: 0.8rem;
-}
-
-.or-separator {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0.2rem 0;
-}
-
-.or-line {
-  flex: 1;
-  height: 1px;
-  background: color-mix(in srgb, var(--p-content-border-color) 80%, transparent);
-}
-
-.or-label {
-  color: var(--p-text-muted-color);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-}
-
-.submit-button {
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
-
-.back-button {
-  font-weight: 600;
-}
-
-/* Success state */
-.success-state {
-  margin-top: 1.25rem;
-  display: grid;
-  gap: 1.25rem;
-  justify-items: center;
-  text-align: center;
-}
-
 .success-icon {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   background: color-mix(in srgb, var(--p-primary-100) 40%, var(--p-surface-0));
   border: 1px solid color-mix(in srgb, var(--p-primary-300) 40%, transparent);
   color: var(--p-primary-600);
-  font-size: 1.4rem;
-}
-
-.success-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--p-primary-700);
-  margin: 0;
-}
-
-.success-copy {
-  color: var(--p-text-muted-color);
-  font-size: 0.92rem;
-  line-height: 1.55;
-  margin: 0;
-}
-
-.success-copy strong {
-  color: var(--p-text-color);
-  font-weight: 600;
 }
 
 /* Inputs */
-.forgot-form :deep(.p-inputtext) {
-  background: color-mix(in srgb, var(--p-primary-50) 28%, var(--p-surface-0));
+.forgot-card :deep(.p-inputtext) {
+  background: var(--p-surface-0);
   border-color: color-mix(in srgb, var(--p-primary-200) 45%, var(--p-content-border-color));
   color: var(--p-surface-700);
   transition:
@@ -251,43 +147,34 @@ const onSubmit = () => {
     background-color 0.2s ease;
 }
 
-.forgot-form :deep(.p-inputtext:hover) {
+.forgot-card :deep(.p-inputtext:hover) {
   border-color: color-mix(in srgb, var(--p-primary-300) 60%, var(--p-content-border-color));
-  background: color-mix(in srgb, var(--p-primary-50) 40%, var(--p-surface-0));
+  background: var(--p-surface-0);
 }
 
-.forgot-form :deep(.p-inputtext:focus) {
+.forgot-card :deep(.p-inputtext:focus) {
   border-color: var(--p-primary-400);
   background: var(--p-surface-0);
 }
 
-.forgot-form :deep(.p-floatlabel label) {
+.forgot-card :deep(.p-floatlabel label) {
   color: var(--p-surface-400);
   background: transparent !important;
   padding: 0;
 }
 
-.forgot-form :deep(.p-floatlabel input:focus ~ label),
-.forgot-form :deep(.p-floatlabel input.p-filled ~ label) {
+.forgot-card :deep(.p-floatlabel input:focus ~ label),
+.forgot-card :deep(.p-floatlabel input.p-filled ~ label) {
   background: transparent !important;
   color: var(--p-surface-500) !important;
 }
 
-.forgot-form :deep(.p-inputtext::placeholder) {
-  color: var(--p-surface-400);
-}
-
-.forgot-form :deep(.p-inputtext.p-invalid) {
-  border-color: var(--p-red-400) !important;
-}
-
-.forgot-form :deep(.p-inputtext.p-invalid:focus) {
+.forgot-card :deep(.p-inputtext.p-invalid) {
   border-color: var(--p-red-400) !important;
 }
 
 /* Buttons */
-.forgot-form :deep(.p-button),
-.success-state :deep(.p-button) {
+.forgot-card :deep(.p-button) {
   padding: 0.85rem 1rem;
   transition:
     background 0.2s ease,
@@ -296,26 +183,24 @@ const onSubmit = () => {
     transform 0.15s ease;
 }
 
-.forgot-form :deep(.submit-button:not(:disabled):hover) {
+.forgot-card :deep(.p-button:not(.p-button-link):not(.p-button-outlined):not(:disabled):hover) {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px color-mix(in srgb, var(--p-primary-500) 45%, transparent);
 }
 
-.forgot-form :deep(.submit-button:not(:disabled):active) {
+.forgot-card :deep(.p-button:not(.p-button-link):not(.p-button-outlined):not(:disabled):active) {
   transform: translateY(0);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--p-primary-500) 30%, transparent);
 }
 
-.forgot-form :deep(.back-button:not(:disabled):hover),
-.success-state :deep(.back-button:not(:disabled):hover) {
+.forgot-card :deep(.p-button-outlined:not(:disabled):hover) {
   transform: translateY(-2px);
   background: color-mix(in srgb, var(--p-primary-100) 35%, transparent) !important;
   border-color: color-mix(in srgb, var(--p-primary-400) 60%, var(--p-content-border-color)) !important;
   box-shadow: 0 6px 18px color-mix(in srgb, var(--p-primary-400) 20%, transparent);
 }
 
-.forgot-form :deep(.back-button:not(:disabled):active),
-.success-state :deep(.back-button:not(:disabled):active) {
+.forgot-card :deep(.p-button-outlined:not(:disabled):active) {
   transform: translateY(0);
   box-shadow: none;
 }
