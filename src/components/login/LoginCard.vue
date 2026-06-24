@@ -44,7 +44,7 @@ const onSubmit = () => {
   <Card class="w-full max-w-[420px] mx-auto login-card">
     <template #title>
       <div class="flex flex-col gap-1.5">
-        <h2 class="text-2xl font-bold tracking-tight text-surface-900 m-0">Sign in</h2>
+        <h2 class="text-2xl font-bold tracking-tight text-primary-700 m-0">Sign in</h2>
         <p class="text-sm text-surface-500 m-0">Enter your credentials to access your account.</p>
       </div>
     </template>

@@ -14,7 +14,7 @@ const steps = [
 
     <h1 class="text-4xl lg:text-5xl font-bold tracking-tight leading-[1.08] hero-title">
       Forgot your<br />
-      <span class="hero-title-accent">password?</span>
+      <span class="font-normal hero-title-accent">password?</span>
     </h1>
 
     <p class="text-[1.05rem] leading-relaxed hero-copy">
