@@ -1,21 +1,21 @@
-# MIGRANDO VUE + PRIMEVUE PARA TAILWIND CSS V4 (HYBRID GOVERNANCE)
+# MIGRATING VUE + PRIMEVUE TO TAILWIND CSS V4 (HYBRID GOVERNANCE)
 
-Este guia de migração (Skill) orienta o dev/agente na refatoração de layouts e cartões de formulários para usem Tailwind CSS v4 mantendo a governança visual híbrida.
-
----
-
-## Estrutura Regente (Hybrid Governance Split)
-
-1. **Tailwind CSS**: Controla o layout (flex, grid), espaçamentos (padding, margin, gap), tipografia secundária, separadores e alinhamentos inline.
-2. **CSS Scoped + Design Tokens**: Mantém controle sobre cores semânticas complexas (ex: `var(--p-surface-0)`), efeitos de Glassmorphism (blur, border semi-transparente) e sobressalência de componentes PrimeVue (`:deep()`).
+This migration skill guides the developer/agent when refactoring layouts and form cards to use Tailwind CSS v4 while maintaining the hybrid visual governance.
 
 ---
 
-## Blueprints Lado a Lado (Old CSS vs Tailwind Hybrid)
+## Governance Split
+
+1. **Tailwind CSS**: Controls layout (flex, grid), spacing (padding, margin, gap), secondary typography, separators, and inline alignment.
+2. **Scoped CSS + Design Tokens**: Controls complex semantic colors (e.g., `var(--p-surface-0)`), Glassmorphism effects (blur, semi-transparent borders), and PrimeVue component deep overrides (`:deep()`).
+
+---
+
+## Side-by-Side Blueprints (Old CSS vs Tailwind Hybrid)
 
 ### 1. Auth Layout (Main Centering Shell)
 
-#### Antes (CSS Customizado)
+#### Before (Custom CSS)
 ```vue
 <template>
   <div class="auth-layout">
@@ -36,7 +36,7 @@ Este guia de migração (Skill) orienta o dev/agente na refatoração de layouts
 </style>
 ```
 
-#### Depois (Tailwind Híbrido)
+#### After (Tailwind Hybrid)
 ```vue
 <template>
   <div class="flex items-center justify-center min-height-screen w-full p-6 auth-bg">
@@ -54,11 +54,11 @@ Este guia de migração (Skill) orienta o dev/agente na refatoração de layouts
 
 ---
 
-### 2. Form Fields (Inputs, FloatLabel e Password Wrapper)
+### 2. Form Fields (Inputs, FloatLabel and Password Wrapper)
 
-Sempre preserve `position: relative` e a largura no input wrapper do PrimeVue, enquanto o layout externo usa Tailwind.
+Always preserve `position: relative` and width on the PrimeVue input wrapper, while the outer layout uses Tailwind.
 
-#### Antes (CSS Customizado)
+#### Before (Custom CSS)
 ```vue
 <template>
   <div class="form-field">
@@ -79,7 +79,7 @@ Sempre preserve `position: relative` e a largura no input wrapper do PrimeVue, e
 </style>
 ```
 
-#### Depois (Tailwind Híbrido)
+#### After (Tailwind Hybrid)
 ```vue
 <template>
   <div class="mb-5">
@@ -93,14 +93,14 @@ Sempre preserve `position: relative` e a largura no input wrapper do PrimeVue, e
 
 ---
 
-### 3. "OR" Separador Visual
+### 3. "OR" Visual Separator
 
-Use as utilidades de borda e flexibilidade do Tailwind CSS em vez de pseudos-elementos manuais no CSS scoped.
+Use Tailwind border and flex utilities instead of manual pseudo-elements in scoped CSS.
 
-#### Antes (CSS Customizado)
+#### Before (Custom CSS)
 ```vue
 <template>
-  <div class="divider">ou</div>
+  <div class="divider">or</div>
 </template>
 
 <style scoped>
@@ -121,12 +121,12 @@ Use as utilidades de borda e flexibilidade do Tailwind CSS em vez de pseudos-ele
 </style>
 ```
 
-#### Depois (Tailwind Híbrido)
+#### After (Tailwind Hybrid)
 ```vue
 <template>
   <div class="flex items-center my-5 text-sm text-surface-500">
     <div class="flex-1 h-px bg-surface-200" />
-    <span class="px-3">ou</span>
+    <span class="px-3">or</span>
     <div class="flex-1 h-px bg-surface-200" />
   </div>
 </template>
@@ -134,15 +134,15 @@ Use as utilidades de borda e flexibilidade do Tailwind CSS em vez de pseudos-ele
 
 ---
 
-### 4. Card Form + Scoped Overrides
+### 4. Form Card + Scoped Overrides
 
-O cartão mantém a classe Glassmorphism (`glass-card`) via scoped CSS, mas todo o espaçamento interno, largura e filhos são controlados de forma fluida pelo Tailwind.
+The card keeps its Glassmorphism class (`glass-card`) via scoped CSS, but all internal spacing, width, and children are controlled by Tailwind utility classes.
 
-#### Antes (CSS Customizado)
+#### Before (Custom CSS)
 ```vue
 <template>
   <div class="glass-card">
-    <h2 class="title">Acessar Conta</h2>
+    <h2 class="title">Sign in</h2>
     <form class="glass-form">
       ...
     </form>
@@ -168,11 +168,11 @@ O cartão mantém a classe Glassmorphism (`glass-card`) via scoped CSS, mas todo
 </style>
 ```
 
-#### Depois (Tailwind Híbrido)
+#### After (Tailwind Hybrid)
 ```vue
 <template>
   <div class="w-full max-w-[440px] p-8 glass-card">
-    <h2 class="text-2xl font-bold text-center mb-6 text-surface-900">Acessar Conta</h2>
+    <h2 class="text-2xl font-bold text-center mb-6 text-surface-900">Sign in</h2>
     <form class="flex flex-col gap-4">
       ...
     </form>
@@ -191,10 +191,57 @@ O cartão mantém a classe Glassmorphism (`glass-card`) via scoped CSS, mas todo
 
 ---
 
-## Checklist de Qualidade de Migração (Defesa de Governança)
+## Migration Quality Checklist
 
-- [ ] Nenhum padding (`p-`), margin (`m-`), gap (`gap-`) ou flex/grid permaneceu no `<style scoped>`.
-- [ ] Cores de bordas semânticas ou de fundos especiais usam scoped CSS com variables `var(--p-surface-*)` ou `color-mix()`.
-- [ ] Font-sizes, weights e cores de texto secundárias neutras migraram para Tailwind (ex: `text-surface-500`, `font-bold`).
-- [ ] `:deep(.p-password)` continua com `position: relative` e largura garantidas no CSS scoped para evitar sobreposição do ícone de olho.
-- [ ] Compilação com `npm run type-check` não gera bugs de tipagem ou exportação.
+- [ ] No padding (`p-`), margin (`m-`), gap (`gap-`), flex, or grid rules remain in `<style scoped>`.
+- [ ] Semantic border colors and special backgrounds use scoped CSS with `var(--p-surface-*)` or `color-mix()`.
+- [ ] Font sizes, weights, and neutral secondary text colors have moved to Tailwind (e.g., `text-surface-500`, `font-bold`).
+- [ ] `:deep(.p-password)` still has `position: relative` and full width in scoped CSS to prevent the eye icon from escaping the input bounds.
+- [ ] `npm run type-check` exits 0 with no TypeScript errors.
+
+---
+
+## Common Post-Migration Pitfalls
+
+### Pitfall 1 — `font-weight: normal` on the `*` selector in `base.css`
+
+Vite's default `base.css` includes `font-weight: normal` on the universal selector. Because Tailwind v4 generates utilities inside `@layer utilities`, CSS **outside any layer** has higher cascade priority and silently overrides `font-bold`, `font-semibold`, etc. on **every element**.
+
+**Mandatory action before any migration:** check for and remove that line from `base.css`:
+
+```css
+/* ❌ REMOVE */
+*, *::before, *::after {
+  font-weight: normal;
+}
+```
+
+### Pitfall 2 — `<span>` elements inside headings need an explicit `font-weight`
+
+`<span>` inherits `font-weight` from its parent, but Tailwind does not automatically inject that weight into children. Whenever an accent `<span>` inside an `<h1 class="font-bold">` should have a different weight, declare it explicitly:
+
+```vue
+<!-- Accent span with normal weight inside a bold heading -->
+<h1 class="text-5xl font-bold">
+  Forgot your<br />
+  <span class="font-normal hero-title-accent">password?</span>
+</h1>
+```
+
+### Pitfall 3 — Layout does not vertically center without a flex wrapper
+
+Applying `min-h-screen` directly to `<main class="grid ...">` **does not center** content in the viewport. Always use the correct structure:
+
+```vue
+<!-- ❌ Does NOT vertically center -->
+<main class="grid grid-cols-[1.05fr_1fr] min-h-screen ...">
+  <slot />
+</main>
+
+<!-- ✅ Correctly centered -->
+<div class="min-h-screen flex items-center justify-center px-5 py-8 lg:px-6 lg:py-12">
+  <main class="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-center w-full max-w-[480px] lg:max-w-[1140px]">
+    <slot />
+  </main>
+</div>
+```

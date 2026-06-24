@@ -2,21 +2,21 @@
 description: "Use when creating new screens, views, components, or layouts in a Vue + PrimeVue project."
 name: "front-end-especialize"
 tools: [read, edit, search, execute, todo]
-argument-hint: "Describe what to build (e.g., 'criar tela de perfil', 'criar RegisterCard com validação')"
+argument-hint: "Describe what to build (e.g., 'create a profile screen', 'create RegisterCard with validation')"
 ---
 
 You are a specialized Vue 3 frontend agent. Follow this exact order on every task:
 
-## Skills Disponíveis
+## Available Skills
 
-Quando a tarefa envolver criação de componentes PrimeVue ou migração para Tailwind CSS, leia a skill correspondente antes de escrever código:
+When the task involves creating PrimeVue components or migrating to Tailwind CSS, read the corresponding skill before writing any code:
 
-| Tarefa | Skill |
+| Task | Skill |
 |---|---|
-| Criar componente PrimeVue (`*Card.vue`, `*Hero.vue`, `*View.vue`) | `.github/skills/create-primevue-component/SKILL.md` |
-| Migrar ou refatorar layouts e cards usando Tailwind CSS | `.github/skills/create-tailwind-migration/SKILL.md` |
+| Create PrimeVue component (`*Card.vue`, `*Hero.vue`, `*View.vue`) | `.github/skills/create-primevue-component/SKILL.md` |
+| Migrate or refactor layouts and cards using Tailwind CSS | `.github/skills/create-tailwind-migration/SKILL.md` |
 
-A skill contém os padrões exatos de importação, validação, `:deep()` CSS, visual identity tokens e checklist de qualidade para este projeto.
+The skill contains the exact import patterns, validation, `:deep()` CSS, visual identity tokens, and quality checklist for this project.
 
 ---
 
@@ -32,12 +32,22 @@ Before writing a single line of code:
 
 ## Step 2 — Check if Tailwind is installed
 
-Antes de migrar ou criar qualquer componente com Tailwind CSS:
-1. Leia o `package.json` para verificar se `tailwindcss` está disponível.
-2. Se não estiver, realize o setup usando:
+Before migrating or creating any component with Tailwind CSS:
+1. Read `package.json` to verify whether `tailwindcss` is available.
+2. If it is not, run the setup:
    `npm install tailwindcss @tailwindcss/vite tailwindcss-primeui`
-3. Configure o plugin `tailwindcss()` no `vite.config.ts`.
-4. Importe `@import "tailwindcss"` e `@import "tailwindcss-primeui"` no topo do `src/assets/main.css`.
+3. Register the `tailwindcss()` plugin in `vite.config.ts`.
+4. Add `@import "tailwindcss"` and `@import "tailwindcss-primeui"` at the top of `src/assets/main.css`.
+
+## Step 3 — Check for regression pitfalls before migrating
+
+Before refactoring any component, run this preventive checklist:
+
+1. **`base.css`**: Check whether `font-weight: normal` exists on the `*` selector and **remove it**. That rule overrides all Tailwind font-weight utilities (`font-bold`, `font-semibold`, etc.) because CSS outside `@layer` has higher cascade priority than `@layer utilities`.
+
+2. **`<span>` inside headings**: Always declare `font-normal` or `font-bold` explicitly on `<span>` elements inside `<h1>`/`<h2>`. Do not rely on implicit inheritance when parent and child need different weights.
+
+3. **Layout centering**: `AuthLayout.vue` must follow the structure `div(min-h-screen flex items-center justify-center) > main(grid ...)`. Never apply `min-h-screen` directly to a `<main>` with `grid` — it does not vertically center content in the viewport.
 
 ---
 

@@ -221,6 +221,63 @@ Types for payloads always come from `src/types/*.types.ts` — never defined inl
 
 ## Visual Identity
 
+### Tailwind CSS Migration — Critical Pitfalls
+
+When migrating from scoped CSS to Tailwind, these regressions **must be avoided**:
+
+#### 1. `font-weight: normal` in `base.css` kills all Tailwind font utilities
+
+The default `base.css` has a `*` reset that includes `font-weight: normal`. Because Tailwind v4 generates utilities inside CSS `@layer utilities`, any unlayered rule (like `base.css`) has higher cascade priority and overrides them. **Always remove `font-weight: normal` from the universal selector:**
+
+```css
+/* WRONG — breaks font-bold, font-semibold, etc. everywhere */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal; /* ← DELETE THIS LINE */
+}
+
+/* CORRECT */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+```
+
+#### 2. `<span>` elements inside `<h1>`/`<h2>` inherit parent `font-weight` — declare explicitly
+
+When a heading uses `font-bold`, child `<span>` elements that need a **different** weight must declare it explicitly:
+
+```vue
+<!-- Accent span that should be font-normal inside a font-bold h1 -->
+<h1 class="text-5xl font-bold hero-title">
+  Sign in to continue<br />
+  <span class="font-normal hero-title-accent">your journey.</span>
+</h1>
+```
+
+Never rely on implicit inheritance when mixing weights inside a heading.
+
+#### 3. Layout vertical centering — always use a flex wrapper, not just `min-h-screen` on `<main>`
+
+Applying `min-h-screen` directly on a `<main>` with `grid` does not center content vertically. The correct pattern is:
+
+```vue
+<!-- WRONG: grid on main does not vertically center children -->
+<main class="grid ... min-h-screen">
+  <slot />
+</main>
+
+<!-- CORRECT: flex wrapper centers, inner main handles the layout -->
+<div class="min-h-screen flex items-center justify-center px-5 py-8">
+  <main class="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-center w-full max-w-[480px] lg:max-w-[1140px]">
+    <slot />
+  </main>
+</div>
+```
+
+---
+
 ### Hybrid Styling Rule (Tailwind CSS Integration)
 
 Whenever Tailwind CSS is configured, the styling responsibilities are split as follows to protect our PrimeVue theme and visual identity:
