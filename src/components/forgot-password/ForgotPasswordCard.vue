@@ -5,6 +5,12 @@ import Card from 'primevue/card'
 import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
 
+const props = defineProps<{
+  loading?: boolean
+  errorMessage?: string
+  success?: boolean
+}>()
+
 const emit = defineEmits<{
   submit: [payload: { email: string }]
   goToLogin: []
@@ -12,7 +18,6 @@ const emit = defineEmits<{
 
 const email = ref('')
 const submitted = ref(false)
-const success = ref(false)
 
 const errors = computed(() => ({
   email: !email.value.trim()
@@ -26,8 +31,7 @@ const hasErrors = computed(() => Object.values(errors.value).some(Boolean))
 
 const onSubmit = () => {
   submitted.value = true
-  if (hasErrors.value) return
-  success.value = true
+  if (hasErrors.value || props.loading) return
   emit('submit', { email: email.value })
 }
 </script>
@@ -84,6 +88,14 @@ const onSubmit = () => {
           </small>
         </div>
 
+        <small
+          v-if="errorMessage"
+          class="flex items-center gap-1.5 text-xs text-red-500"
+          role="alert"
+        >
+          <i class="pi pi-exclamation-circle" /> {{ errorMessage }}
+        </small>
+
         <Button
           type="submit"
           label="Send reset link"
@@ -91,6 +103,8 @@ const onSubmit = () => {
           icon-pos="right"
           class="mt-1 font-semibold tracking-wide"
           fluid
+          :loading="loading"
+          :disabled="loading"
         />
 
         <div class="flex items-center gap-3.5 my-1" role="separator" aria-label="or">

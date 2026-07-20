@@ -46,3 +46,7 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Backend (api/)
+api/bin/
+api/obj/

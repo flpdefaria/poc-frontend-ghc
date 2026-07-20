@@ -7,6 +7,12 @@ import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 
+const props = defineProps<{
+  loading?: boolean
+  errorMessage?: string
+  successMessage?: string
+}>()
+
 const emit = defineEmits<{
   submit: [payload: { name: string; email: string; password: string; terms: boolean }]
   goToLogin: []
@@ -43,7 +49,7 @@ const hasErrors = computed(() => Object.values(errors.value).some(Boolean))
 
 const onSubmit = () => {
   submitted.value = true
-  if (hasErrors.value) return
+  if (hasErrors.value || props.loading) return
   emit('submit', {
     name: name.value,
     email: email.value,
@@ -148,6 +154,21 @@ const onSubmit = () => {
           </small>
         </div>
 
+        <small
+          v-if="errorMessage"
+          class="flex items-center gap-1.5 text-xs text-red-500"
+          role="alert"
+        >
+          <i class="pi pi-exclamation-circle" /> {{ errorMessage }}
+        </small>
+        <small
+          v-if="successMessage"
+          class="flex items-center gap-1.5 text-xs text-green-600"
+          role="status"
+        >
+          <i class="pi pi-check-circle" /> {{ successMessage }}
+        </small>
+
         <Button
           type="submit"
           label="Create account"
@@ -155,6 +176,8 @@ const onSubmit = () => {
           icon-pos="right"
           class="mt-1 font-semibold tracking-wide"
           fluid
+          :loading="loading"
+          :disabled="loading"
         />
 
         <div class="flex items-center gap-3.5 my-1" role="separator" aria-label="or">
